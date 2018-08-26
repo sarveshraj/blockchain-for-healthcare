@@ -1,2 +1,7 @@
-# blockchain-for-healthcare
-A prototype dApp for managing electronic medical records on the Ethereum platform
+# truffle-init-default
+
+Default project for Truffle: example contracts, migrations and tests
+
+## Usage
+
+See the [Truffle documentation](http://truffleframework.com/docs/) for more info.

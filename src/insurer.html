@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>EMR Dapp</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- <script src="js/bundle.js"></script> -->
+    <!-- Custom CSS -->
+    <style>
+
+    .panel{
+        margin-bottom: 60px;
+    }
+    .navbar{
+        margin-bottom: 70px;
+    }
+    .panel-heading{
+        margin-bottom: 20px;
+    }
+    .nav-pills > li > a{
+        padding: 0;
+        padding-right: 10px;
+    }
+    .nav-pills > li > a:hover{
+        background-color: initial;
+    }
+    .nav-pills > li.active > a{
+        color: #23527c;
+        background-color: initial;
+    }
+    .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus{
+        color: #23527c;
+        background-color: inherit; 
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">EMR Dapp</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="./register.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-center">Personal Information</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <table class="table">
+                            <tr>
+                                <th>Name:</th>
+                                <td id="name"></td>
+                            </tr>
+                            <tr>
+                                <th>No of customers:</th>
+                                <td id="noCustomers"></td>
+                            </tr>
+                        </table>
+                        <!-- <div class="form-group"> 
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info btn-lg">Update details</button>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-center">Insurance Claims</h3>
+            </div>
+            <div class="panel-body">
+                <!-- <div class="row">
+                    <div class="alert alert-danger col-sm-8 col-sm-offset-2">
+                        <strong>Notice!</strong> The access could not be revoked. Please retry or contact admin.
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <table id="claims" class="table table-hover">
+                            <tr>
+                                <th>Patient</th>
+                                <th class="publicKeyPatient">Public Key</th>
+                                <th>View Records</th>
+                                <th>Doctor</th>
+                                <th>Ailment</th>
+                                <th>Action</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </div>
+
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var key = url.searchParams.get("key");
+    key = key.toLocaleLowerCase();
+    var ailmentsDict = {};
+
+    ailmentsDict[0] = "Cancer";
+    ailmentsDict[1] = "Heart Attack";
+    ailmentsDict[2] = "Brain Tumour";
+    ailmentsDict[3] = "Anaemia";
+    ailmentsDict[4] = "Alzheimer's";
+    ailmentsDict[5] = "Gastroenteritis";
+    ailmentsDict[6] = "Tuberculosis";
+    ailmentsDict[7] = "Spondylolisthesis";
+
+    toggleRecordsButton = 0;
+
+    $(document).ready(function() {
+        
+        // console.log(key);
+        // console.log(contractInstance.get_patient.call(key, {gas: 1000000}));
+        $(".alert-danger").hide();
+
+        var a = 0;
+        var b = 0;
+        
+        var PatientAddress = 0;
+        var DocAddr = 0;
+        var Diagnosis = 0;
+        var PatientName = [];
+        var DocName = [];
+        var Patient_Doctor =0;
+        
+        contractInstance.get_insurer(key, {gas: 1000000},function(error, result){
+            if(!error){
+                a = result[0]; 
+                b = result[1];
+                PatientAddress = result[2];
+                DocAddr = result[3];
+                Diagnosis = result[4];
+                // Patient_Doctor = [PatientAddress,DocAddr];
+                console.log(Diagnosis);
+                $("#name").html(a);
+                $("#noCustomers").html(b.c[0]);
+                var table = document.getElementById("claims");
+
+                 for(var index=0;index<Diagnosis.length;index++){
+                    var row = table.insertRow(index+1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    // var row = table.rows[index+1];
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
+                    
+                    cell5.innerHTML = ailmentsDict[Diagnosis[index]];
+                    cell6.innerHTML = '<button onclick="releaseClaim(this)" class="btn btn-success">Release Claim</button>';
+
+                }
+
+                PatientAddress.forEach(function(listItem, index){
+                    contractInstance.get_patient.call(listItem, {gas: 1000000}, function(error, result){
+                        // var table = document.getElementById("accessDoc");
+                        if(!error) {
+                            PatientName.push(result[0]);
+                            var row = table.rows[index+1];
+                            var cell1 = row.cells[0];
+                            var cell2 = row.cells[1];
+                            var cell3 = row.cells[2];
+                            cell2.className = "publicKeyPatient";
+                            cell1.innerHTML = result[0];
+                            cell2.innerHTML = listItem;
+                            cell3.innerHTML = '<button onclick="viewRecords(this)" class="btn btn-info">View Records</button>';
+                        }
+                        else
+                            console.error(error);
+                    });
+                });
+
+                DocAddr.forEach(function(listItem, index){
+                    contractInstance.get_doctor.call(listItem, {gas: 1000000}, function(error, result){
+                        // var table = document.getElementById("accessDoc");
+                        if(!error) {
+                            DocName.push(result[0]);
+                            var row = table.rows[index+1];
+                            var cell4 = row.cells[3];
+                            cell4.innerHTML = result[0];
+                        }
+                        else
+                            console.error(error);
+                    });
+                });
+            }    
+            else
+                console.error(error);
+        });
+
+    });
+        
+
+    function releaseClaim(element) {
+        rNo= element.parentNode.parentNode.rowIndex;
+        var row = document.getElementById("claims").rows[rNo];
+        var patientAddr = row.cells[1].innerHTML;
+        var viewRecordsButton = row.cells[2];
+        console.log(viewRecordsButton);
+
+        contractInstance.accept_claim(patientAddr, {from: key, gas: 1000000, value: web3.toWei(4, 'ether')}, function(error, result){
+            if(!error){
+                if (toggleRecordsButton%2 != 0){
+                    console.log("boo");
+                    $(viewRecordsButton).click();
+                }
+
+                document.getElementById("claims").deleteRow(rNo);
+            }  
+            else {
+                // $(".alert-danger").show();
+                console.log(error);
+            }
+                
+        });
+    }
+
+    function viewRecords(element){
+        var table = document.getElementById("claims");
+        var index = element.parentNode.parentNode.rowIndex;
+        var patientAddress = table.rows[index].cells[1].innerHTML;
+
+        if (toggleRecordsButton%2 == 0){
+            
+            patientRecord = "";
+            
+            contractInstance.get_hash(patientAddress, {gas: 1000000}, function(error, result){
+                if(!error){
+                    $.get("http://localhost:8080/ipfs/"+result, function(data){
+                        patientRecord = data;
+                        var row1 = table.insertRow(index+1);
+                        var cell1 = row1.insertCell(0);
+                        cell1.colSpan = 6;
+                        cell1.innerHTML = "<pre>"+patientRecord+"</pre";
+                    })
+                }else{
+                    console.log(error);
+                }
+            })                    
+
+            toggleRecordsButton +=1;
+
+            element.innerHTML = "Hide Records";
+            element.className = "btn btn-danger";
+        } else {
+            row = table.rows[index + 1];
+            $(row).hide();
+
+            toggleRecordsButton -=1;
+
+            element.innerHTML = "View Records";
+            element.className = "btn btn-info"
+        }
+    }
+
+</script>
+
+</body>
+
+</html>
