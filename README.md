@@ -14,7 +14,7 @@ The projects requires NodeJS and npm to work. Instructions to install all other 
 #### Ganache
 
 1. Go to [Ganache homepage](https://truffleframework.com/ganache) and download. 
-2. If you are on Linux, you must have recieved an _.appimage_ file. Follow installation instructions available [here.](https://itsfoss.com/use-appimage-linux/)
+2. If you are on Linux, you must have received an _.appimage_ file. Follow installation instructions available [here.](https://itsfoss.com/use-appimage-linux/)
 
 #### IPFS
 
