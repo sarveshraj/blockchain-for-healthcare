@@ -45,4 +45,31 @@ The projects requires NodeJS and npm to work. Instructions to install all other 
     - Enable Automine
   - Under **Accounts & Keys** tab:
     - Enable Autogenerate HD Mnemonic
-    
+
+#### 2. IPFS
+  - Fire up your terminal and run `ipfs init`
+  - Then run 
+    ```
+    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "['*']"
+    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "['true']"
+    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "['PUT', 'POST', 'GET']"
+    ```
+#### 3. Metamask
+  - As soon as you install Metamask, it will ask you to accept some terms and policies. Read them and accept.
+  - It will then ask you to create an account, just 
+  
+### Deploying the contract
+
+I purposely haven't used any development framework so as to keep the code as raw as possible. This will also be easier to understand for any newcomer who is already having a tough time understanding the many technologies the application is built on.
+
+#### 1. Starting your local development blockchain
+  - Open Ganache.
+  - Make sure to configure it the way mentioned above.
+  
+Moving on, to deploy the contract on the blockchain you have two options:
+  - Use any available development framework for dApps. I recommend the [Truffle](https://truffleframework.com/truffle) framework. [Embark](https://embark.status.im/) is another great alternative.
+  - Go full on geek mode and deploy it yourself with a few lines of code.
+
+I'll be explaining the second method here.
+
+#### 2. Deploying the contract and linking it to the frontend
