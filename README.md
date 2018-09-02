@@ -55,8 +55,10 @@ The projects requires NodeJS and npm to work. Instructions to install all other 
     ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "['PUT', 'POST', 'GET']"
     ```
 #### 3. Metamask
-  - As soon as you install Metamask, it will ask you to accept some terms and policies. Read them and accept.
-  - It will then ask you to create an account, just 
+  - After installing Metamask, click on the metamask icon on your browser.
+  - Click on __TRY IT NOW__, if there is an announcement saying a new version of Metamask is available.
+  - Click on continue and accept all the terms and conditions after reading them.
+  - Stop when Metamask asks you to create a new password. We will come back to this after deploying the contract in the next section.
   
 ### Deploying the contract
 
@@ -73,3 +75,49 @@ Moving on, to deploy the contract on the blockchain you have two options:
 I'll be explaining the second method here.
 
 #### 2. Deploying the contract and linking it to the frontend
+  - Fire up your terminal and move to the project directory
+  - Now open up `/YOUR_PROJECT_DIRECTORY/src/js/run.js` in your favourite text editor
+  - You have to make two changes:
+    1. Make sure the address in line number 3 is the same as your RPC server address on Ganache.
+    If you have configured Ganache as instructed above, the code should look like this:
+    
+    ```
+    var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    ```
+    2. The path in this line should point to where your solidity contract is located:
+    
+    ```
+    var code = fs.readFileSync('/YOUR_PROJECT_DIRECTORY/contracts/Agent.sol').toString();
+    ```
+  - Go back to your terminal, type `node` and hit enter
+  - Copy and paste all the contents of `run.js` to the terminal
+  - If all goes well, you should see some few lines as output of the command
+    ```
+    console.log(compiledCode.contracts[':Agent'].interface);
+    ```
+  - This is the ABI of the contract, copy and paste these lines in line number 10 of `app.js`. The code should look like:
+    ``` 
+    abi = JSON.parse('PASTE_YOUR_ABI_HERE')
+    ```
+  - Go back to the terminal and type `deployedContract.address;`, which is also the last command of your `run.js` file. The     output is the address where the contract is deployed on the blockchain.
+  - Copy the output and paste it on line number 13 of `app.js`. The code should look like:
+    ```
+    contractInstance = AgentContract.at('PASTE_YOUR_ADDRESS_HERE');
+    ```
+  - That's it for this part. Now lets set up Metamask.
+  
+### Running the dApp
+
+#### 1. Connecting Metamask to our local blockchain
+  - Let's go back to the configuration section of Metamask.
+  - If done correctly, you would have stopped at the part where Metamask asks you to create a new password.
+  - Just below the __CREATE__ button, click on the __Import with seed phrase__.
+  - A form should open up, asking you to enter __Wallet Seed__.
+  - Open Ganache, copy the twelve words that make up the __MNEMONIC__ on the __ACCOUNTS__ tab. 
+  - Paste the twelve words in __Wallet Seed__. Create a new password and click __IMPORT__.
+  
+#### 2. Start a local server
+  - Open a new terminal window and navigate to `/YOUR_PROJECT_DIRECTORY/src/`.
+  - Run `php -S locahost:3000`.
+  - Open `localhost:3000/register.html` on your browser.
+  - That's it! The dApp is up and running locally.
