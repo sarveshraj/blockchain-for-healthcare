@@ -115,8 +115,13 @@ I'll be explaining the second method here.
   - A form should open up, asking you to enter __Wallet Seed__.
   - Open Ganache, copy the twelve words that make up the __MNEMONIC__ on the __ACCOUNTS__ tab. 
   - Paste the twelve words in __Wallet Seed__. Create a new password and click __IMPORT__.
+
+#### 2. Starting IPFS 
+  - Open a new terminal window.
+  - Make sure you have configured IPFS as mentioned above.
+  - Run `ipfs daemon`.
   
-#### 2. Start a local server
+#### 3. Start a local server
   - Open a new terminal window and navigate to `/YOUR_PROJECT_DIRECTORY/src/`.
   - Run `php -S locahost:3000`.
   - Open `localhost:3000/register.html` on your browser.
