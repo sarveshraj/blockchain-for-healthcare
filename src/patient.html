@@ -74,13 +74,6 @@
     }
     </style>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
 
 <body>
@@ -166,22 +159,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="form-group"> 
-                            <label for="sel2" class="control-label col-sm-2">Time duration:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="sel2">
-                                    <option selected disabled>-- Please Select --</option>
-                                    <option>One time access</option>
-                                    <option>Three time access</option>
-                                    <option>Ten time access</option>
-                                    <option>Six hours from first access</option>
-                                    <option>Twelve hours from first access</option>
-                                    <option>One day from first access</option>
-                                    <option>One week from first access</option>
-                                    <option>One month from first access</option>
-                                </select>
-                            </div>
-                        </div> -->
                     </form>
                     <div class="text-center">
                         <button onclick = "giveAccess()" class="btn btn-primary btn-lg">Submit</button>
@@ -302,9 +279,6 @@
             else
                 console.error(error);
         });
-        // console.log(b.c[0]);
-        
-        // 
         
         // print out the doctors to share emr
         var DoctorList = 0;
@@ -350,8 +324,6 @@
                         if(!error) {
                             [a,b] = result;
                             console.log(a);
-                            // console.log("Hi");
-                            // console.log(i);
                             var row = table.insertRow(index+1);
                             var cell1 = row.insertCell(0);
                             var cell2 = row.insertCell(1);

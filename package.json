@@ -8,7 +8,6 @@
     "dev": "lite-server",
     "start": "lite-server"
   },
-  
   "author": "",
   "license": "ISC",
   "dependencies": {

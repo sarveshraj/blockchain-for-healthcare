@@ -44,12 +44,6 @@
     }
     </style>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -99,11 +93,6 @@
                                 <td id="age"></td>
                             </tr>
                         </table>
-                        <!-- <div class="form-group"> 
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-info btn-lg">Update details</button>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                     
@@ -197,8 +186,7 @@
                         if(!error) {
                             [a,b] = result;
                             console.log(a);
-                            // console.log("Hi");
-                            // console.log(i);
+
                             var row = table.insertRow(index+1);
                             var cell1 = row.insertCell(0);
                             var cell2 = row.insertCell(1);
@@ -334,7 +322,6 @@
         var patientAddress = table.rows[index].cells[1].innerHTML;
       
         console.log(patientAddress);
-        // var dropSelect = document.getElementById("ailmentsList"+patientAddress);
         var diagnosis = $("#ailmentsList"+patientAddress).val();
         diagnosis = parseInt(diagnosis);
         var diagnosed = ailmentsDict[diagnosis];
