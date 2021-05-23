@@ -1,7 +1,5 @@
 # Blockchain for Healthcare: A Proof of Concept
 
-> **Note**: A lot has changed in the Ethereum world since this project was completed and the setup instructions might not work now. If you, being a good samaritan, run into an error during setup and are able to fix it, please raise a pull request to help others. Big big thanks from me!
-
 ## Installation
 
 The projects requires NodeJS and npm to work. Instructions to install all other dependencies are given below.

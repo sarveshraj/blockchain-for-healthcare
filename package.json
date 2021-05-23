@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "lite-server"
+    "dev": "lite-server",
+    "start": "lite-server"
   },
+  
   "author": "",
   "license": "ISC",
   "dependencies": {
     "solc": "^0.4.24",
-    "web3": "github:ethereum/web3.js"
+    "web3": "^0.20.0"
   },
   "devDependencies": {
     "lite-server": "^2.3.0"

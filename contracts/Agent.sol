@@ -1,4 +1,4 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.5.1;
 
 contract Agent {
     
@@ -37,45 +37,51 @@ contract Agent {
     mapping (address => address) Patient_Insurer;
     // might not be necessary
     mapping (address => string) patientRecords;
+    
 
 
-    function add_agent(string _name, uint _age, uint _designation, string _hash) public {
+    function add_agent(string memory _name, uint _age, uint _designation, string memory _hash) public returns(string memory){
         address addr = msg.sender;
         
         if(_designation == 0){
-            patientInfo[addr].name = _name;
-            patientInfo[addr].age = _age;
-            patientInfo[addr].record = _hash;
+            patient memory p;
+            p.name = _name;
+            p.age = _age;
+            p.record = _hash;
+            patientInfo[msg.sender] = p;
             patientList.push(addr)-1;
+            return _name;
         }
        else if (_designation == 1){
             doctorInfo[addr].name = _name;
             doctorInfo[addr].age = _age;
             doctorList.push(addr)-1;
-
+            return _name;
        }
        else if(_designation == 2){
            insurerInfo[addr].name = _name;
            insurerList.push(addr)-1;
+           return _name;
        }
        else{
            revert();
        }
     }
 
-    function get_patient(address addr) view public returns (string, uint, uint[], address, string){
+
+    function get_patient(address addr) view public returns (string memory , uint, uint[] memory , address, string memory ){
         // if(keccak256(patientInfo[addr].name) == keccak256(""))revert();
         return (patientInfo[addr].name, patientInfo[addr].age, patientInfo[addr].diagnosis, Patient_Insurer[addr], patientInfo[addr].record);
     }
 
-    function get_doctor(address addr) view public returns (string, uint){
+    function get_doctor(address addr) view public returns (string memory , uint){
         // if(keccak256(doctorInfo[addr].name)==keccak256(""))revert();
         return (doctorInfo[addr].name, doctorInfo[addr].age);
     }
-    function get_patient_doctor_name(address paddr, address daddr) view public returns (string, string){
+    function get_patient_doctor_name(address paddr, address daddr) view public returns (string memory , string memory ){
         return (patientInfo[paddr].name,doctorInfo[daddr].name);
     }
-    function get_insurer(address addr) view public returns (string, uint, address[], address[], uint[] ){
+    function get_insurer(address addr) view public returns (string memory , uint, address[] memory , address[] memory , uint[] memory  ){
         // if(keccak256(doctorInfo[addr].name)==keccak256(""))revert();
         return (insurerInfo[addr].name, insurerInfo[addr].count_of_patient, insurerInfo[addr].PatientWhoClaimed, 
         insurerInfo[addr].DocName, insurerInfo[addr].diagnosis);
@@ -93,7 +99,7 @@ contract Agent {
     }
 
    
-    function select_insurer(address iaddr, uint[] _diagnosis) payable public {
+    function select_insurer(address payable iaddr, uint[] memory  _diagnosis) payable public {
         uint total_amount = (_diagnosis.length);
         require(msg.value == total_amount*(1 ether));
         // require(msg.sender.balance >= msg.value);
@@ -104,7 +110,7 @@ contract Agent {
     }
 
     //must be called by doctor
-    function insurance_claim(address paddr, uint _diagnosis, string _hash) public {
+    function insurance_claim(address paddr, uint _diagnosis, string memory  _hash) public {
         bool patientFound = false;
         for(uint i = 0;i<doctorInfo[msg.sender].patientAccessList.length;i++){
             if(doctorInfo[msg.sender].patientAccessList[i]==paddr){
@@ -135,7 +141,7 @@ contract Agent {
 
     //must be called by insurer
 
-    function accept_claim(address paddr) public payable {
+    function accept_claim(address payable paddr) public payable {
         // require(msg.sender.balance >= msg.value);
         require(msg.value == 4 ether);
         paddr.transfer(msg.value);
@@ -191,12 +197,12 @@ contract Agent {
         remove_element_in_array(patientInfo[paddr].doctorAccessList, daddr);
     }
     
-    function get_accessed_doctorlist_for_patient(address addr) public view returns (address[])
+    function get_accessed_doctorlist_for_patient(address addr) public view returns (address[] memory )
     { 
         address[] storage doctoraddr = patientInfo[addr].doctorAccessList;
         return doctoraddr;
     }
-    function get_accessed_patientlist_for_doctor(address addr) public view returns (address[])
+    function get_accessed_patientlist_for_doctor(address addr) public view returns (address[] memory )
     {
         return doctorInfo[addr].patientAccessList;
     }
@@ -208,22 +214,22 @@ contract Agent {
         creditPool -= 2;
     }
 
-    function get_patient_list() public view returns(address[]){
+    function get_patient_list() public view returns(address[] memory ){
         return patientList;
     }
 
-    function get_doctor_list() public view returns(address[]){
+    function get_doctor_list() public view returns(address[] memory ){
         return doctorList;
     }
-    function get_insurer_list() public view returns(address[]){
+    function get_insurer_list() public view returns(address[] memory ){
         return insurerList;
     }
 
-    function get_hash(address paddr) public view returns(string){
+    function get_hash(address paddr) public view returns(string memory ){
         return patientInfo[paddr].record;
     }
 
-    function set_hash(address paddr, string _hash) internal {
+    function set_hash(address paddr, string memory _hash) internal {
         patientInfo[paddr].record = _hash;
     }
 

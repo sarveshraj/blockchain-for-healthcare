@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>EMR Dapp</title>
+    
+    <title>SwasthyaChain</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -96,13 +96,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">EMR Dapp</a>
+                    <a class="navbar-brand" href="#">SwasthyaChain</a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="./register.html">Logout</a>
+                            <a href="./index.html">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -212,125 +212,32 @@
                     </div>
 
                 </div>
-            </div>    
-            <div class="panel panel-default" id="insuranceInfo">
-                <div class="panel-heading">
-                    <h3 class="text-center">Insurance provider</h3>
-                </div>
-                <div class="panel-body">
-                    <!-- <div class="row">
-                        <div class="alert alert-danger col-sm-8 col-sm-offset-2">
-                            <strong>Notice!</strong> The access could not be revoked. Please retry or contact admin.
-                        </div>
-                    </div> -->
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2">
-                            <h4>Your Insurance provider is <strong id="insuranceProvider"></strong> and you are getting insurance for the 
-                            following ailments:</h4>
-                            <ul id="ailmentsCovered">
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>    
-            <div class="panel panel-default" id="buyInsurance">
-                <div class="panel-heading">
-                    <h3 class="text-center">Do you want to buy an Insurance policy?</h3>
-                </div>
-                <div class="panel-body">
-                    <!-- <div class="row">
-                        <div class="alert alert-danger col-sm-8 col-sm-offset-2">
-                            <strong>Notice!</strong> The access could not be revoked. Please retry or contact admin.
-                        </div>
-                    </div> -->
-                    <form class="form-horizontal" action="/action_page.php">
-                        <div class="form-group"> 
-                            <label for="permitDoctorList" class="control-label col-sm-2">Insurer:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="insurers">
-                                    <option selected disabled>-- Please Select --</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group"> 
-                            <label for="sel2" class="control-label col-sm-2">Choose Ailments:</label>
-                            <div class="col-sm-8">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="ailment" value="0" onclick="calc()" autocomplete="off"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Cancer</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="ailment" value="1" onclick="calc()" autocomplete="off"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Heart Attack</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="ailment" value="2" onclick="calc()" autocomplete="off"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Brain Tumour</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="ailment" value="3" onclick="calc()" autocomplete="off"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Anaemia</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="ailment" value="4" onclick="calc()" autocomplete="off"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Alzheimer's</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="ailment" value="5" onclick="calc()" autocomplete="off"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Gastroenteritis</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="ailment" value="6" onclick="calc()" autocomplete="off"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Tuberculosis</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="ailment" value="7" onclick="calc()" autocomplete="off"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Spondylolisthesis</label>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="row">
-                        <div class="col-sm-offset-2 col-sm-8 well-sm well">
-                            <h3 class="text-center">You will have to pay <strong><span id="emi">0</span> ETH</strong> every year.</h3>
-                            <h3 class="text-center">You will get <strong>4 ETH</strong> for each succesful claim.</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-offset-4 col-sm-4 text-center">
-                            <button onclick = "buyInsurance()" class="btn btn-primary btn-lg">Buy</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>       
+            </div>           
         </div>
 
 <script src="js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+<script src="/js/web3.min.js"></script>
 <script src="js/app.js"></script>
 
 <script>
 
     var url_string = window.location.href;
     var url = new URL(url_string);
-    var key = url.searchParams.get("key");
-    key = key.toLocaleLowerCase();
-    // console.log(key);
-    var ailmentsDict = {};
-
-    ailmentsDict[0] = "Cancer";
-    ailmentsDict[1] = "Heart Attack";
-    ailmentsDict[2] = "Brain Tumour";
-    ailmentsDict[3] = "Anaemia";
-    ailmentsDict[4] = "Alzheimer's";
-    ailmentsDict[5] = "Gastroenteritis";
-    ailmentsDict[6] = "Tuberculosis";
-    ailmentsDict[7] = "Spondylolisthesis";
+    var key ;
 
     toggleRecordsButton = 0;
     var recordHash = "";
 
-    $(document).ready(function() {
-        
+    $(window).load(function() {
+        connect();
         $("#records").hide();
         $(".alert-info").hide();
         $(".alert-danger").hide();
+        key = web3.currentProvider.selectedAddress;
+        key = key.toLocaleLowerCase();
 
         var a = "";
         var b = 0;
@@ -341,8 +248,11 @@
         $("#insuranceInfo").hide();
         
         // print patient details and insurer details (if exists). If insurer does not exist show the buy insurance panel
+        console.log("Getting Patient Data");
         contractInstance.get_patient.call(key, {gas: 1000000}, function(error, result){
+            console.log("Patient Data Result:"+result);
             if(!error){
+                console.log(result);
                 a = result[0]; 
                 b = result[1];
                 ailments = result[2];
@@ -355,21 +265,7 @@
                 if (insurerAddress != 0){
                     $("#buyInsurance").hide();
 
-                    contractInstance.get_insurer(insurerAddress, {gas: 1000000}, function(error, result){
-                        
-                        insurerName = result[0];
 
-                        var ailmentsInsurance = ""
-                        for(var i = 0; i < ailments.length; i++){
-                            ailmentsInsurance += "<li>"+ailmentsDict[ailments[i]]+"</li>"
-                        }
-
-                        $("#ailmentsCovered").html(ailmentsInsurance);
-                        $("#insuranceProvider").html(insurerName);
-
-                        $("#insuranceInfo").show();
-
-                    })   
                 } else {
                     var InsurerList = 0;
                     
@@ -412,7 +308,7 @@
         
         // print out the doctors to share emr
         var DoctorList = 0;
-
+        console.log("Getting Doctor List");
         contractInstance.get_doctor_list({gas: 1000000},function(error, result){
 
             if(!error) {
@@ -497,11 +393,6 @@
         
     }
 
-    function calc(){
-        number_of_ailments = document.querySelectorAll('input[name="ailment"]:checked').length;
-        to_pay = number_of_ailments;
-        $("#emi").html(to_pay);
-    }
     
 
     function giveAccess() {
@@ -561,44 +452,7 @@
         });
     }
 
-    function buyInsurance(){
-        
-        var list = document.getElementById("insurers");
-        insurerName = $("#insurers").val();
-        index = list.selectedIndex;
-
-        var ailments = [];
-        $.each($('input[name="ailment"]:checked'), function(){            
-            ailments.push(parseInt($(this).val()));
-        });
-
-        console.log(ailments);
-        console.log(ailmentsDict);
-
-        number_of_ailments = document.querySelectorAll('input[name="ailment"]:checked').length;
-        to_pay = number_of_ailments;
-
-        contractInstance.get_insurer_list({gas: 1000000}, function(error, result){
-            InsurerList = result;
-            insurerToBuy = InsurerList[index-1];
-            contractInstance.select_insurer.sendTransaction(insurerToBuy, ailments, {from: key, gas: 1000000, value: web3.toWei(to_pay, 'ether')}, function(error){
-                if(!error){
-                    $("#buyInsurance").hide();
-                    $("#insuranceProvider").html(insurerName);
-                    var ailmentsInsurance = ""
-                    for(var i = 0; i < ailments.length; i++){
-                        ailmentsInsurance += "<li>"+ailmentsDict[ailments[i]]+"</li>"
-                    }
-                    $("#ailmentsCovered").html(ailmentsInsurance);
-
-                    $("#insuranceInfo").show();
-                } else{
-                    console.log(error)
-                }
-            })
-        })
-        
-    }
+    
 
 </script>
 

@@ -9,10 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>EMR Dapp</title>
+    <title>SwasthyaChain</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon.ico"/>
     <!-- <script src="js/bundle.js"></script> -->
     <!-- Custom CSS -->
     <style>
@@ -65,13 +66,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">EMR Dapp</a>
+                <a class="navbar-brand" href="#">SwasthyaChain</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="./register.html">Logout</a>
+                        <a href="./index.html">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -140,6 +141,7 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/app.js"></script>
+<script src="/js/web3.min.js"></script>
 <script src="https://unpkg.com/ipfs-api/dist/index.min.js" crossorigin="anonymous"></script>
 <script>
     var ipfs = window.IpfsApi('localhost', '5001')
@@ -147,26 +149,26 @@
     const Buffer = window.IpfsApi().Buffer;
 
     var ailmentsDict = {};
-    ailmentsDict[0] = "Cancer";
-    ailmentsDict[1] = "Heart Attack";
-    ailmentsDict[2] = "Brain Tumour";
-    ailmentsDict[3] = "Anaemia";
-    ailmentsDict[4] = "Alzheimer's";
-    ailmentsDict[5] = "Gastroenteritis";
-    ailmentsDict[6] = "Tuberculosis";
-    ailmentsDict[7] = "Spondylolisthesis";
+    ailmentsDict[0] = "Common Flu";
+    ailmentsDict[1] = "Viral Infection";
+    ailmentsDict[2] = "Cancer";
+    ailmentsDict[3] = "Tumor";
+    ailmentsDict[4] = "Covid-19";
+    ailmentsDict[5] = "Heart-Disorder";
+    ailmentsDict[6] = "Other";
     var url_string = window.location.href;
     var url = new URL(url_string);
-    var key = url.searchParams.get("key");
-    var docName = ""
-    key = key.toLocaleLowerCase();
+    var key ;
+    var docName = "";
     
     toggleRecordsButton = 0;
 
-    $(document).ready(function() {
-
+    $(window).load(function() {
+        connect();
         $(".alert-danger").hide();
-
+        
+        key = web3.currentProvider.selectedAddress;
+        key = key.toLocaleLowerCase();
 
         var a = 0;
         var b = 0;
@@ -251,14 +253,13 @@
                                                     <div class="col-sm-10">
                                                         <select class="form-control" id="ailmentsList${patientAddress}" style="width:inherit;" required>
                                                             <option selected disabled>-- Please Select --</option>
-                                                            <option value = "0">Cancer</option>
-                                                            <option value = "1">Heart Attack</option>
-                                                            <option value = "2">Brain Tumour</option>
-                                                            <option value = "3">Anaemia</option>
-                                                            <option value = "4">Alzheimer's</option>
-                                                            <option value = "5">Gastroenteritis</option>
-                                                            <option value = "6">Tuberculosis</option>
-                                                            <option value = "7">Spondylolisthesis</option>
+                                                            <option value = "0">Common Flu</option>
+                                                            <option value = "1">Viral Infection</option>
+                                                            <option value = "2">Cancer</option>
+                                                            <option value = "3">Tumor</option>
+                                                            <option value = "4">Covid-19</option>
+                                                            <option value = "5">Heart-Disorder</option>
+                                                            <option value = "6">Other</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -313,6 +314,20 @@
         
     }
 
+    function getDateTime(){
+        function AddZero(num) {
+            return (num >= 0 && num < 10) ? "0" + num : num + "";
+        }
+        var now = new Date();
+        var strDateTime = [[AddZero(now.getDate()), 
+        AddZero(now.getMonth() + 1), 
+        now.getFullYear()].join("/"), 
+        [AddZero(now.getHours()), 
+        AddZero(now.getMinutes())].join(":"), 
+        now.getHours() >= 12 ? "PM" : "AM"].join(" ");
+        return strDateTime;
+    }
+
     function submitDiagnosis(element,index)
     {
         var table = document.getElementById("viewPatient");
@@ -329,9 +344,10 @@
 
         var newRecords = 
 `Diagnosed By : ${docName}
-Doctor's Public Key : ${key}
+Diagnosis Time : ${getDateTime()}
 Diagnosis : ${diagnosed}
 Comments : ${comments}
+
         
 `
 
